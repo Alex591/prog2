@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Szerencsétlenjáték Zrt. Lottózómasina</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../photos/Icon.ico</normaloff>../photos/Icon.ico</iconset>
+  </property>
   <property name="documentMode">
    <bool>false</bool>
   </property>

@@ -15,13 +15,34 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QRadialGradient)
 from PySide2.QtWidgets import *
 
+from OtosLotto_UI import Ui_otoslotto
 
 class Ui_Lottozomasina(object):
+    def openotos(self):
+        self.window = QMainWindow()
+        self.ui = Ui_otoslotto()
+        self.ui.setupUi(self.window)
+        MainWindow.hide()
+        self.window.show()
+
+    def openskandinav(self):
+        pass
+
+
+    def openhelp(self):
+        pass
+
+
+
+
     def setupUi(self, Lottozomasina):
         if Lottozomasina.objectName():
             Lottozomasina.setObjectName(u"Lottozomasina")
         Lottozomasina.resize(643, 392)
         Lottozomasina.setAcceptDrops(True)
+        icon = QIcon()
+        icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        Lottozomasina.setWindowIcon(icon)
         Lottozomasina.setDocumentMode(False)
         Lottozomasina.setDockNestingEnabled(False)
         Lottozomasina.setUnifiedTitleAndToolBarOnMac(False)
@@ -32,6 +53,9 @@ class Ui_Lottozomasina(object):
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(90, 320, 191, 41))
+
+        self.pushButton.clicked.connect(self.openotos)
+
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setGeometry(QRect(340, 320, 191, 41))
@@ -57,14 +81,18 @@ class Ui_Lottozomasina(object):
         self.retranslateUi(Lottozomasina)
 
         QMetaObject.connectSlotsByName(Lottozomasina)
-    # setupUi
+        # setupUi
 
     def retranslateUi(self, Lottozomasina):
-        Lottozomasina.setWindowTitle(QCoreApplication.translate("Lottozomasina", u"Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3masina", None))
+        Lottozomasina.setWindowTitle(QCoreApplication.translate("Lottozomasina",
+                                                                u"Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3masina",
+                                                                None))
         self.actionInform_ci.setText(QCoreApplication.translate("Lottozomasina", u"Inform\u00e1ci\u00f3", None))
         self.pushButton.setText(QCoreApplication.translate("Lottozomasina", u"\u00d6t\u00f6slott\u00f3", None))
         self.pushButton_2.setText(QCoreApplication.translate("Lottozomasina", u"Skandin\u00e1v Lott\u00f3", None))
-        self.welcomeLabel.setText(QCoreApplication.translate("Lottozomasina", u"\u00dcdv\u00f6z\u00f6lj\u00fck a Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3g\u00e9p\u00e9ben!", None))
+        self.welcomeLabel.setText(QCoreApplication.translate("Lottozomasina",
+                                                             u"\u00dcdv\u00f6z\u00f6lj\u00fck a Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3g\u00e9p\u00e9ben!",
+                                                             None))
         self.photoLabel.setText("")
         self.menuSegits_g.setTitle(QCoreApplication.translate("Lottozomasina", u"Segits\u00e9g", None))
     # retranslateUi

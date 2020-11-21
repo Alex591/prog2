@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>ötöslottó</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../photos/Icon.ico</normaloff>../photos/Icon.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
@@ -192,7 +196,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Bahnschrift Light SemiCondensed</family>
+      <family>Times New Roman</family>
       <pointsize>26</pointsize>
      </font>
     </property>
