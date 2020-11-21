@@ -1,4 +1,5 @@
 import random
+import re
 
 class Lotto():
     def __init__(self,jelolesek,osszesszam,mennyithuzni):
@@ -29,17 +30,6 @@ class Lotto():
             while len(self.valasztott) < self.jelolesek:
                 szam=""
                 # itt kell egy kis kivételkezelés mert Hősünk néha becsiccsent és szerelmei nevét akarja megtenni lottón
-                valid=False
-                while not valid:
-                    while not szam.isnumeric():
-                        szam=input("Adj egy számot")
-
-
-
-
-
-
-
 
     def hanyjo(self):
         szam=0
@@ -71,7 +61,7 @@ class OtosLotto(Lotto):
 
 #main
 x=OtosLotto(1)
-# print(x.lottohuzas())
-print(x.inputszamok(False))
-# print(x.hanyjo())
+print(x.lottohuzas())
+print(x.inputszamok(True))
+print(x.hanyjo())
 
