@@ -11,25 +11,15 @@ class Lotto():
         self.mennyithuzni=mennyithuzni
         # Valasztott:A felhasználó által választott,vagy a gép által generált számsorozat
         # Eredmény: A lottóhúzás végeredménye
-        self.valasztott=set([])
-        self.eredmeny = set([])
+        self.__valasztott=set([])
+        self.__eredmeny = set([])
 
     def lottohuzas(self):
 
         while len(self.eredmeny)<self.jelolesek:
             self.eredmeny.add(random.randint(1,self.osszesszam))
         return self.eredmeny
-    def inputszamok(self,gepi):
-        # A gép generálja le a számokat
-        if gepi:
-            while len(self.valasztott)<self.jelolesek:
-                self.valasztott.add(random.randint(1,self.osszesszam))
-            return self.valasztott
-        # Hősünk pityegi be a számokat
-        else:
-            while len(self.valasztott) < self.jelolesek:
-                szam=""
-                # itt kell egy kis kivételkezelés mert Hősünk néha becsiccsent és szerelmei nevét akarja megtenni lottón
+
 
     def hanyjo(self):
         szam=0
@@ -37,6 +27,18 @@ class Lotto():
             if x in self.valasztott:
                 szam+=1
         return szam
+    @property
+    def eredmeny(self):
+        return self.__eredmeny
+    @property
+    def valasztott(self):
+        return self.__valasztott
+    def addvalasztott(self,szam):
+        self.valasztott.add(szam)
+    def removevalasztott(self,szam):
+        self.valasztott.discard(szam)
+
+
 
 
 class OtosLotto(Lotto):
@@ -62,6 +64,6 @@ class OtosLotto(Lotto):
 #main
 x=OtosLotto(1)
 print(x.lottohuzas())
-print(x.inputszamok(True))
+x.addvalasztott(22)
 print(x.hanyjo())
-
+#

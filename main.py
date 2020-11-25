@@ -56,9 +56,13 @@ class Ui_Lottozomasina(object):
 
         self.pushButton.clicked.connect(self.openotos)
 
+
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setGeometry(QRect(340, 320, 191, 41))
+
+        self.pushButton_2.clicked.connect(self.openskandinav)
+
         self.welcomeLabel = QLabel(self.centralwidget)
         self.welcomeLabel.setObjectName(u"welcomeLabel")
         self.welcomeLabel.setGeometry(QRect(180, 290, 263, 13))
