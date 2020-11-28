@@ -9,12 +9,14 @@
 ################################################################################
 from functools import partial
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt, QRegExp)
+    QRect, QSize, QUrl, Qt)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+    QRadialGradient,QImage)
 from PySide2.QtWidgets import *
+
 import lotto
+
 
 
 class Ui_otoslotto(object):
@@ -39,29 +41,49 @@ class Ui_otoslotto(object):
                 print(f"{self.lottoList[szelveny - 1].valasztott} és index: {szelveny}")
 
 
+    def jatek(self):
+            self.lottoList[0].lottohuzas()
+            print(f"A NYERŐ SZÁMOK: {self.lottoList[0].eredmeny}")
+            # egy számot húzok és mindegyiknek az eredményét arra állitom be
+            for i in range(1,len(self.lottoList)):
+                    self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
+
+
+            for i in range(len(self.lottoList)):
+                    if len(self.lottoList[i].valasztott)!=5:
+                            print(f"{i} nem játszható")
+                    else:
+                            print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
+
+
+
+
 
     def setupUi(self, otoslotto):
         if otoslotto.objectName():
             otoslotto.setObjectName(u"otoslotto")
         otoslotto.resize(1042, 644)
         icon = QIcon()
-        icon.addFile(u"../photos/Icon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
         otoslotto.setWindowIcon(icon)
         otoslotto.setLayoutDirection(Qt.RightToLeft)
         self.centralwidget = QWidget(otoslotto)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setAutoFillBackground(False)
 
+
+        # itt van a háttér
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(0, 0, 1042, 644))
+        self.label.setPixmap(QPixmap(u"photos/otos_backround.png"))
+
+
+
+
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(400, 520, 361, 91))
-
-
-
-
-
-
-
         font = QFont()
         font.setFamily(u"Arial")
         font.setUnderline(False)
@@ -3340,9 +3362,8 @@ class Ui_otoslotto(object):
         self.sz6_67.setStyleSheet(u"")
         self.sz6_67.setCheckable(True)
         otoslotto.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(otoslotto)
-        self.statusbar.setObjectName(u"statusbar")
-        otoslotto.setStatusBar(self.statusbar)
+        self.pushButton.clicked.connect(partial(self.jatek))
+
 
         self.retranslateUi(otoslotto)
         QMetaObject.connectSlotsByName(otoslotto)

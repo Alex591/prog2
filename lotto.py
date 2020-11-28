@@ -30,6 +30,8 @@ class Lotto():
     @property
     def eredmeny(self):
         return self.__eredmeny
+    def seteredmeny(self,e):
+        self.__eredmeny=e
     @property
     def valasztott(self):
         return self.__valasztott
@@ -62,8 +64,8 @@ class OtosLotto(Lotto):
 
 
 #main
-x=OtosLotto(1)
-print(x.lottohuzas())
-x.addvalasztott(22)
-print(x.hanyjo())
-#
+# x=OtosLotto(1)
+# print(x.lottohuzas())
+# x.addvalasztott(22)
+# print(x.hanyjo())
+# #
