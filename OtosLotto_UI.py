@@ -30,30 +30,32 @@ class Ui_otoslotto(object):
 
     def addszam(self,btn,szelveny):
         if btn.isChecked():
-                if len(self.lottoList[szelveny-1].valasztott)>=5:
+                if len(self.lottoList[szelveny].valasztott) >= 5:
                         btn.setChecked(False)
-                        return 
-                self.lottoList[szelveny - 1].addvalasztott(int(btn.text()))
-                print(f"{self.lottoList[szelveny - 1].valasztott} és index: {szelveny}")
+                        return
+                self.lottoList[szelveny].addvalasztott(int(btn.text()))
+                print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
         else:
-                self.lottoList[szelveny - 1].removevalasztott(int(btn.text()))
-                print(f"{self.lottoList[szelveny - 1].valasztott} és index: {szelveny}")
+                self.lottoList[szelveny].removevalasztott(int(btn.text()))
+                print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
 
     def jatek(self):
             self.lottoList[0].lottohuzas()
             print(f"A NYERŐ SZÁMOK: {self.lottoList[0].eredmeny}")
             # egy számot húzok és mindegyiknek az eredményét arra állitom be
-            for i in range(1,len(self.lottoList)):
+            for i in range(1, len(self.lottoList)):
                     self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
 
-
             for i in range(len(self.lottoList)):
-                    if len(self.lottoList[i].valasztott)!=5:
+                    if len(self.lottoList[i].valasztott) != 5:
                             print(f"{i} nem játszható")
                     else:
-                            print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
+                            print(
+                                    f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
+
+            self.lottoList[0].seteredmeny(set())
 
 
 
@@ -3362,7 +3364,7 @@ class Ui_otoslotto(object):
         self.sz6_67.setStyleSheet(u"")
         self.sz6_67.setCheckable(True)
         otoslotto.setCentralWidget(self.centralwidget)
-        self.pushButton.clicked.connect(partial(self.jatek))
+        self.pushButton.clicked.connect(self.jatek)
 
 
         self.retranslateUi(otoslotto)

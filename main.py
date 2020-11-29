@@ -16,6 +16,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 
 from OtosLotto_UI import Ui_otoslotto
+from SkandinavLotto_UI import Ui_skandinavlotto
 
 class Ui_Lottozomasina(object):
     def openotos(self):
@@ -26,7 +27,11 @@ class Ui_Lottozomasina(object):
         self.window.show()
 
     def openskandinav(self):
-        pass
+        self.window = QMainWindow()
+        self.ui = Ui_skandinavlotto()
+        self.ui.setupUi(self.window)
+        MainWindow.hide()
+        self.window.show()
 
 
     def openhelp(self):

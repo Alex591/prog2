@@ -44,27 +44,41 @@ class Lotto():
 
 
 class OtosLotto(Lotto):
-    def __init__(self,alapnyeremeny):
-        Lotto.__init__(self,5,90,5)
+    def __init__(self, prizepool):
+        Lotto.__init__(self, 5, 90, 5)
+        self.__prizepool = prizepool
+
     #     Az ötös lottó: 5 számmal játszasz.90-ből kihúznak 5 öt,és ha eltaláltad mind az 5 öt akkor jackpot
     def __str__(self):
-        str="Ötös lottó"
+        str = "Ötös lottó"
         return str
 
+    def readprizepool(self):
+        try:
+            fajl = open("nyeremeny.txt", 'r')
+            for x in fajl:
+                self.setprizepool(x)
+        except:
+            pass
+
+    @property
+    def prizepool(self):
+        return self.__prizepool
+
+    def setprizepool(self, p):
+        if str(p).isnumeric():
+            self.__prizepool = p
 
 
+class SkandinavLotto(Lotto):
+    def __init__(self, prizepool):
+        Lotto.__init__(self, 7, 35, 7)
 
 
-
-
-
-
-
-
-
-
-#main
-# x=OtosLotto(1)
+# main
+x = OtosLotto(1)
+x.readprizepool()
+print(x.prizepool)
 # print(x.lottohuzas())
 # x.addvalasztott(22)
 # print(x.hanyjo())
