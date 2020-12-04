@@ -8,57 +8,59 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 from functools import partial
-from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient,QImage)
-from PySide2.QtWidgets import *
 
+from PySide2.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
+from PySide2.QtGui import (QFont,
+                           QIcon, QPixmap)
+from PySide2.QtWidgets import *
+from Eredmeny_UI import Ui_MainWindow
 import lotto
 
 
-
 class Ui_otoslotto(object):
-    lottoList=[]
-    for x in range(1,7):
-            lottoList.append(lotto.OtosLotto(1000))
+    lottoList = []
+    for x in range(1, 7):
+        lottoList.append(lotto.OtosLotto(1000))
+
+    def eredmeny(self, nyero):
+        self.window = QMainWindow()
+        self.ui = Ui_MainWindow(5, nyero, self.lottoList)
+        self.ui.setupUi(self.window)
+        self.window.show()
 
     def find_attributes(self, name_start):
         return [value for name, value in sorted(self.__dict__.items())
-                          if name.startswith(name_start)]
+                if name.startswith(name_start)]
 
-    def addszam(self,btn,szelveny):
+    def addszam(self, btn, szelveny):
         if btn.isChecked():
-                if len(self.lottoList[szelveny].valasztott) >= 5:
-                        btn.setChecked(False)
-                        return
-                self.lottoList[szelveny].addvalasztott(int(btn.text()))
-                print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
+            if len(self.lottoList[szelveny].valasztott) >= 5:
+                btn.setChecked(False)
+                return
+            self.lottoList[szelveny].addvalasztott(int(btn.text()))
+            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
         else:
-                self.lottoList[szelveny].removevalasztott(int(btn.text()))
-                print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
-
+            self.lottoList[szelveny].removevalasztott(int(btn.text()))
+            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
     def jatek(self):
-            self.lottoList[0].lottohuzas()
-            print(f"A NYERŐ SZÁMOK: {self.lottoList[0].eredmeny}")
-            # egy számot húzok és mindegyiknek az eredményét arra állitom be
-            for i in range(1, len(self.lottoList)):
-                    self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
+        self.lottoList[0].lottohuzas()
 
-            for i in range(len(self.lottoList)):
-                    if len(self.lottoList[i].valasztott) != 5:
-                            print(f"{i} nem játszható")
-                    else:
-                            print(
-                                    f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
+        print(f"A NYERŐ SZÁMOK: {self.lottoList[0].eredmeny}")
+        # egy számot húzok és mindegyiknek az eredményét arra állitom be
+        for i in range(1, len(self.lottoList)):
+            self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
 
-            self.lottoList[0].seteredmeny(set())
+        for i in range(len(self.lottoList)):
+            if len(self.lottoList[i].valasztott) != 5:
+                print(f"{i} nem játszható")
+            else:
+                print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
 
+        self.eredmeny(self.lottoList[0].eredmeny)
 
-
+        self.lottoList[0].seteredmeny(set())
 
 
     def setupUi(self, otoslotto):
@@ -73,15 +75,11 @@ class Ui_otoslotto(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setAutoFillBackground(False)
 
-
         # itt van a háttér
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(0, 0, 1042, 644))
         self.label.setPixmap(QPixmap(u"photos/otos_backround.png"))
-
-
-
 
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
@@ -93,30 +91,30 @@ class Ui_otoslotto(object):
         self.pushButton.setFont(font)
         self.pushButton.setAutoFillBackground(False)
         self.pushButton.setStyleSheet(u"\n"
-"\n"
-"\n"
-".QPushlButton {\n"
-"	box-shadow:inset 0px 1px 0px 0px #f5f5f5;\n"
-"	background-color:#ff0303;\n"
-"	border:1px solid #fa0505;\n"
-"	display:inline-block;\n"
-"	cursor:pointer;\n"
-"	color:#ff0303;\n"
-"	font-family:Arial;\n"
-"	font-size:17px;\n"
-"	font-weight:bold;\n"
-"	padding:16px 31px;\n"
-"	text-decoration:none;\n"
-"}\n"
-".QPushButton:hover {\n"
-"	\n"
-"	background-color:transparent;\n"
-"}\n"
-".QPushButton:active {\n"
-"	position:relative;\n"
-"	top:1px;\n"
-"}\n"
-"")
+                                      "\n"
+                                      "\n"
+                                      ".QPushlButton {\n"
+                                      "	box-shadow:inset 0px 1px 0px 0px #f5f5f5;\n"
+                                      "	background-color:#ff0303;\n"
+                                      "	border:1px solid #fa0505;\n"
+                                      "	display:inline-block;\n"
+                                      "	cursor:pointer;\n"
+                                      "	color:#ff0303;\n"
+                                      "	font-family:Arial;\n"
+                                      "	font-size:17px;\n"
+                                      "	font-weight:bold;\n"
+                                      "	padding:16px 31px;\n"
+                                      "	text-decoration:none;\n"
+                                      "}\n"
+                                      ".QPushButton:hover {\n"
+                                      "	\n"
+                                      "	background-color:transparent;\n"
+                                      "}\n"
+                                      ".QPushButton:active {\n"
+                                      "	position:relative;\n"
+                                      "	top:1px;\n"
+                                      "}\n"
+                                      "")
         self.sz1_1 = QToolButton(self.centralwidget)
         self.sz1_1.setObjectName(u"sz1_1")
         self.sz1_1.setGeometry(QRect(120, 50, 25, 19))
@@ -3366,72 +3364,63 @@ class Ui_otoslotto(object):
         otoslotto.setCentralWidget(self.centralwidget)
         self.pushButton.clicked.connect(self.jatek)
 
-
         self.retranslateUi(otoslotto)
         QMetaObject.connectSlotsByName(otoslotto)
-        szelvenylist=[]
+        szelvenylist = []
 
+        szelvenylist.append(self.find_attributes("sz1_"))
+        szelvenylist.append(self.find_attributes("sz2_"))
+        szelvenylist.append(self.find_attributes("sz3_"))
+        szelvenylist.append(self.find_attributes("sz4_"))
+        szelvenylist.append(self.find_attributes("sz5_"))
+        szelvenylist.append(self.find_attributes("sz6_"))
 
-
-        szelvenylist.append (self.find_attributes("sz1_"))
-        szelvenylist.append (self.find_attributes("sz2_"))
-        szelvenylist.append (self.find_attributes("sz3_"))
-        szelvenylist.append (self.find_attributes("sz4_"))
-        szelvenylist.append (self.find_attributes("sz5_"))
-        szelvenylist.append (self.find_attributes("sz6_"))
-
-        for index,x in enumerate(szelvenylist):
-                for button in x:
-                        button.clicked.connect(partial(self.addszam,button,index))
-                        button.setStyleSheet(u"\n"
-                                                      "\n"
-                                                      "\n"
-                                                      ".QToolButton {\n"
-                                                      "	box-shadow:inset 0px 1px 0px 0px #f5f5f5;\n"
-                                                      "	background-color:transparent;\n"
-                                                      "	border:1px solid #fa0505;\n"
-                                                      "	display:inline-block;\n"
-                                                      "	cursor:pointer;\n"
-                                                      "	color:#ff0303;\n"
-                                                      "	font-family:Arial;\n"
-                                                      "	font-size:17px;\n"
-                                                      "	font-weight:bold;\n"
-                                                      "	padding:16px 21px;\n"
-                                                      "	text-decoration:none;\n"
-                                                      "}\n"
-                                                      ".QToolButton:checked {\n"
-                                                      "	\n"
-                                                      "	\n"
-                                                      "	box-shadow: 0px 0px 0px 0px #3dc21b;\n"
-                                                      "	background:linear-gradient(to bottom, #44c767 5%, #6fdb34 100%);\n"
-                                                      "	background-color:#44c767;\n"
-                                                      "	display:inline-block;\n"
-                                                      "	cursor:pointer;\n"
-                                                      "	color:#ffffff;\n"
-                                                      "	font-family:Arial;\n"
-                                                      "	font-size:17px;\n"
-                                                      "	font-weight:bold;\n"
-                                                      "	\n"
-                                                      "	text-decoration:none;\n"
-                                                      "}\n"
-                                                      ".QToolButton:active {\n"
-                                                      "	position:relative;\n"
-                                                      "	top:1px;\n"
-                                                      "}\n"
-                                                      "")
-
-
-
-
-
-
-
+        for index, x in enumerate(szelvenylist):
+            for button in x:
+                button.clicked.connect(partial(self.addszam, button, index))
+                button.setStyleSheet(u"\n"
+                                     "\n"
+                                     "\n"
+                                     ".QToolButton {\n"
+                                     "	box-shadow:inset 0px 1px 0px 0px #f5f5f5;\n"
+                                     "	background-color:transparent;\n"
+                                     "	border:1px solid #fa0505;\n"
+                                     "	display:inline-block;\n"
+                                     "	cursor:pointer;\n"
+                                     "	color:#ff0303;\n"
+                                     "	font-family:Arial;\n"
+                                     "	font-size:17px;\n"
+                                     "	font-weight:bold;\n"
+                                     "	padding:16px 21px;\n"
+                                     "	text-decoration:none;\n"
+                                     "}\n"
+                                     ".QToolButton:checked {\n"
+                                     "	\n"
+                                     "	\n"
+                                     "	box-shadow: 0px 0px 0px 0px #3dc21b;\n"
+                                     "	background:linear-gradient(to bottom, #44c767 5%, #6fdb34 100%);\n"
+                                     "	background-color:#44c767;\n"
+                                     "	display:inline-block;\n"
+                                     "	cursor:pointer;\n"
+                                     "	color:#ffffff;\n"
+                                     "	font-family:Arial;\n"
+                                     "	font-size:17px;\n"
+                                     "	font-weight:bold;\n"
+                                     "	\n"
+                                     "	text-decoration:none;\n"
+                                     "}\n"
+                                     ".QToolButton:active {\n"
+                                     "	position:relative;\n"
+                                     "	top:1px;\n"
+                                     "}\n"
+                                     "")
 
     # setupUi
 
     def retranslateUi(self, otoslotto):
         otoslotto.setWindowTitle(QCoreApplication.translate("otoslotto", u"\u00f6t\u00f6slott\u00f3", None))
-        self.pushButton.setText(QCoreApplication.translate("otoslotto", u"MEGJ\u00c1TSZOM A LOTT\u00d3Z\u00d3BAN", None))
+        self.pushButton.setText(
+            QCoreApplication.translate("otoslotto", u"MEGJ\u00c1TSZOM A LOTT\u00d3Z\u00d3BAN", None))
         self.sz1_1.setText(QCoreApplication.translate("otoslotto", u"1", None))
         self.sz1_2.setText(QCoreApplication.translate("otoslotto", u"2", None))
         self.sz1_3.setText(QCoreApplication.translate("otoslotto", u"3", None))
@@ -3974,8 +3963,10 @@ class Ui_otoslotto(object):
         self.sz6_67.setText(QCoreApplication.translate("otoslotto", u"67", None))
     # retranslateUi
 
+
 if __name__ == "__main__":
     import sys
+
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     ui = Ui_otoslotto()
