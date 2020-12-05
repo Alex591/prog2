@@ -3367,6 +3367,7 @@ class Ui_otoslotto(object):
         self.retranslateUi(otoslotto)
         QMetaObject.connectSlotsByName(otoslotto)
         szelvenylist = []
+        # listába rak minden gombot
 
         szelvenylist.append(self.find_attributes("sz1_"))
         szelvenylist.append(self.find_attributes("sz2_"))
@@ -3374,10 +3375,11 @@ class Ui_otoslotto(object):
         szelvenylist.append(self.find_attributes("sz4_"))
         szelvenylist.append(self.find_attributes("sz5_"))
         szelvenylist.append(self.find_attributes("sz6_"))
-
+        # itt történik meg minden bekötése
         for index, x in enumerate(szelvenylist):
             for button in x:
                 button.clicked.connect(partial(self.addszam, button, index))
+                # stílus beállitása
                 button.setStyleSheet(u"\n"
                                      "\n"
                                      "\n"

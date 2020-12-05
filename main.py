@@ -19,6 +19,7 @@ from OtosLotto_UI import Ui_otoslotto
 from SkandinavLotto_UI import Ui_skandinavlotto
 
 class Ui_Lottozomasina(object):
+    # ötöslottó ablak megnyitása
     def openotos(self):
         self.window = QMainWindow()
         self.ui = Ui_otoslotto()
@@ -26,6 +27,7 @@ class Ui_Lottozomasina(object):
         MainWindow.hide()
         self.window.show()
 
+    # Skandináv ablak megnyitása
     def openskandinav(self):
         self.window = QMainWindow()
         self.ui = Ui_skandinavlotto()
@@ -45,9 +47,12 @@ class Ui_Lottozomasina(object):
             Lottozomasina.setObjectName(u"Lottozomasina")
         Lottozomasina.resize(643, 392)
         Lottozomasina.setAcceptDrops(True)
+
+        # Ikon
         icon = QIcon()
         icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
         Lottozomasina.setWindowIcon(icon)
+
         Lottozomasina.setDocumentMode(False)
         Lottozomasina.setDockNestingEnabled(False)
         Lottozomasina.setUnifiedTitleAndToolBarOnMac(False)

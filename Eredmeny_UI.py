@@ -17,11 +17,13 @@ from PySide2.QtWidgets import *
 
 
 class Ui_MainWindow(object):
+    # itt az __init__-be van rakva pár cucc mert ezeket az infókat az ötöslottótól vagy a skandinávtól kapja meg.
     def __init__(self, mennyi, nyero, lottolista):
         self.mennyi = mennyi
         self.nyero = nyero
         self.lottolista = lottolista
 
+    # Ha van legalább egy nyertes szám is akkot True-t ad vissza.
     def isgood(self):
         for x in self.lottolista:
             if x.hanyjo() > 0:
@@ -42,9 +44,12 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         font.setBold(True)
         font.setWeight(75)
+
+        # Ikon
         icon = QIcon()
         icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
+
         self.label.setFont(font)
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
@@ -120,7 +125,9 @@ class Ui_MainWindow(object):
         self.WinningsLabel.setText(
             QCoreApplication.translate("MainWindow", f"F\u0151nyerem\u00e9ny: ${self.lottolista[0].prizepool / 2}",
                                        None))
+        # ha valid,vagyis be van jelolve a kello mennyisegu szám
         if self.lottolista[0].isvalid():
+            # akkor kiirja ezt.
             self.szelveny_1.setText(QCoreApplication.translate("MainWindow",
                                                                f"{self.lottolista[0].valasztott} ból {self.lottolista[0].hanyjo()} jó és nyert vele {int(self.lottolista[0].penznyereseg())}-et",
                                                                None))
@@ -163,7 +170,7 @@ class Ui_MainWindow(object):
         self.szelveny_8.setText(QCoreApplication.translate("MainWindow", u"", None))
         self.szelveny_9.setText(QCoreApplication.translate("MainWindow", u"", None))
         self.szelveny_10.setText(QCoreApplication.translate("MainWindow", u"", None))
-
+        # ha a lista hossza 10 akkor skandináv lottó. Ha nincs ifben akkor csúnya piros dolgokat hoz ki és az nemjó
         if len(self.lottolista) == 10:
             if self.lottolista[6].isvalid():
                 self.szelveny_7.setText(QCoreApplication.translate("MainWindow",
@@ -193,6 +200,7 @@ class Ui_MainWindow(object):
             else:
                 self.szelveny_10.setText(
                     QCoreApplication.translate("MainWindow", f"Tizedik szelvény nem játszható", None))
+        # itt történik a képcsere
         if self.isgood():
             self.label_3.setPixmap(QPixmap(u"photos/eredmeny_igen.jpg"))
         else:
