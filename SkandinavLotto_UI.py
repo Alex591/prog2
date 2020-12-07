@@ -20,8 +20,22 @@ import lotto
 
 class Ui_skandinavlotto(object):
     lottoList = []
+
+    def readnyeremeny(self):
+        try:
+            fajl = open("nyeremeny.txt", 'r')
+            for x in fajl:
+                x = x.strip("\n")
+                if str(x).isnumeric():
+                    return int(x)
+                else:
+                    return 1000
+        except:
+            return 1000
+
+    nyeremeny = readnyeremeny(1)
     for x in range(10):
-        lottoList.append(lotto.SkandinavLotto(1000))
+        lottoList.append(lotto.SkandinavLotto(nyeremeny))
 
     def eredmeny(self, nyero):
         self.window = QMainWindow()
@@ -39,11 +53,11 @@ class Ui_skandinavlotto(object):
                 btn.setChecked(False)
                 return
             self.lottoList[szelveny].addvalasztott(int(btn.text()))
-            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
+            # print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
         else:
             self.lottoList[szelveny].removevalasztott(int(btn.text()))
-            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
+            # print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
     def jatek(self):
         self.lottoList[0].lottohuzas()
@@ -52,11 +66,6 @@ class Ui_skandinavlotto(object):
         for i in range(1, len(self.lottoList)):
             self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
 
-        for i in range(len(self.lottoList)):
-            if len(self.lottoList[i].valasztott) != 7:
-                print(f"{i} nem játszható")
-            else:
-                print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
         self.eredmeny(self.lottoList[0].eredmeny)
         self.lottoList[0].seteredmeny(set())
 
@@ -64,6 +73,7 @@ class Ui_skandinavlotto(object):
         if skandinavlotto.objectName():
             skandinavlotto.setObjectName(u"skandinavlotto")
         skandinavlotto.resize(1050, 582)
+        skandinavlotto.setFixedSize(1050, 582)
         self.centralwidget = QWidget(skandinavlotto)
         icon = QIcon()
         icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
@@ -2199,7 +2209,7 @@ class Ui_skandinavlotto(object):
         self.pushButton.setFont(font1)
         self.pushButton.setAutoFillBackground(False)
         self.pushButton.setStyleSheet(u"")
-        MainWindow.setCentralWidget(self.centralwidget)
+        # MainWindow.setCentralWidget(self.centralwidget)
 
         skandinavlotto.setCentralWidget(self.centralwidget)
         self.pushButton.clicked.connect(partial(self.jatek))

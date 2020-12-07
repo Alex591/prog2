@@ -19,8 +19,18 @@ import lotto
 
 class Ui_otoslotto(object):
     lottoList = []
-    for x in range(1, 7):
-        lottoList.append(lotto.OtosLotto(1000))
+
+    def readnyeremeny(self):
+        try:
+            fajl = open("nyeremeny.txt", 'r')
+            for x in fajl:
+                x = x.strip("\n")
+                if str(x).isnumeric():
+                    return int(x)
+                else:
+                    return 1000
+        except:
+            return 1000
 
     def eredmeny(self, nyero):
         self.window = QMainWindow()
@@ -38,11 +48,11 @@ class Ui_otoslotto(object):
                 btn.setChecked(False)
                 return
             self.lottoList[szelveny].addvalasztott(int(btn.text()))
-            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
+            # print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
         else:
             self.lottoList[szelveny].removevalasztott(int(btn.text()))
-            print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
+            # print(f"{self.lottoList[szelveny].valasztott} és index: {szelveny}")
 
     def jatek(self):
         self.lottoList[0].lottohuzas()
@@ -52,11 +62,11 @@ class Ui_otoslotto(object):
         for i in range(1, len(self.lottoList)):
             self.lottoList[i].seteredmeny(self.lottoList[0].eredmeny)
 
-        for i in range(len(self.lottoList)):
-            if len(self.lottoList[i].valasztott) != 5:
-                print(f"{i} nem játszható")
-            else:
-                print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
+        # for i in range(len(self.lottoList)):
+        #     if len(self.lottoList[i].valasztott) != 5:
+        #         print(f"{i} nem játszható")
+        #     else:
+        #         print(f"Az {i} szelvény: {self.lottoList[i].valasztott} és jó belőle {self.lottoList[i].hanyjo()}")
 
         self.eredmeny(self.lottoList[0].eredmeny)
 
@@ -67,9 +77,13 @@ class Ui_otoslotto(object):
         if otoslotto.objectName():
             otoslotto.setObjectName(u"otoslotto")
         otoslotto.resize(1042, 644)
+        otoslotto.setFixedSize(1042, 644)
+
+        # Ikon
         icon = QIcon()
         icon.addFile(u"photos/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
         otoslotto.setWindowIcon(icon)
+
         otoslotto.setLayoutDirection(Qt.RightToLeft)
         self.centralwidget = QWidget(otoslotto)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -91,29 +105,27 @@ class Ui_otoslotto(object):
         self.pushButton.setFont(font)
         self.pushButton.setAutoFillBackground(False)
         self.pushButton.setStyleSheet(u"\n"
-                                      "\n"
-                                      "\n"
-                                      ".QPushlButton {\n"
-                                      "	box-shadow:inset 0px 1px 0px 0px #f5f5f5;\n"
-                                      "	background-color:#ff0303;\n"
-                                      "	border:1px solid #fa0505;\n"
+                                      ".QPushButton {\n"
+                                      "	background-color:#44c767;\n"
+                                      "	border-radius:28px;\n"
+                                      "	border:1px solid #18ab29;\n"
                                       "	display:inline-block;\n"
                                       "	cursor:pointer;\n"
-                                      "	color:#ff0303;\n"
+                                      "	color:#ffffff;\n"
                                       "	font-family:Arial;\n"
                                       "	font-size:17px;\n"
-                                      "	font-weight:bold;\n"
                                       "	padding:16px 31px;\n"
                                       "	text-decoration:none;\n"
+                                      "	text-shadow:0px 1px 0px #2f6627;\n"
                                       "}\n"
                                       ".QPushButton:hover {\n"
-                                      "	\n"
-                                      "	background-color:transparent;\n"
+                                      "	background-color:#6fdb34;\n"
                                       "}\n"
                                       ".QPushButton:active {\n"
                                       "	position:relative;\n"
                                       "	top:1px;\n"
                                       "}\n"
+                                      "\n"
                                       "")
         self.sz1_1 = QToolButton(self.centralwidget)
         self.sz1_1.setObjectName(u"sz1_1")
@@ -3363,6 +3375,9 @@ class Ui_otoslotto(object):
         self.sz6_67.setCheckable(True)
         otoslotto.setCentralWidget(self.centralwidget)
         self.pushButton.clicked.connect(self.jatek)
+        nyeremeny = self.readnyeremeny()
+        for x in range(1, 7):
+            self.lottoList.append(lotto.OtosLotto(nyeremeny))
 
         self.retranslateUi(otoslotto)
         QMetaObject.connectSlotsByName(otoslotto)

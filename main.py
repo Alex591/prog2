@@ -9,16 +9,17 @@
 ################################################################################
 
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
+                            QRect, QSize, QUrl, Qt)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+                           QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
+                           QRadialGradient)
 from PySide2.QtWidgets import *
 
 from OtosLotto_UI import Ui_otoslotto
 from SkandinavLotto_UI import Ui_skandinavlotto
 
-class Ui_Lottozomasina(object):
+
+class Ui_Lottozomasina(QWidget):
     # ötöslottó ablak megnyitása
     def openotos(self):
         self.window = QMainWindow()
@@ -35,17 +36,25 @@ class Ui_Lottozomasina(object):
         MainWindow.hide()
         self.window.show()
 
+    def setnyeremeny(self, mitis):
+        # A  nyeremény.txt-be írja a nyereményt
+        fajl = open("nyeremeny.txt", 'w')
 
-    def openhelp(self):
-        pass
+        print(mitis, file=fajl)
+        fajl.close()
 
+    def opensetter(self):
 
+        int, ok = QInputDialog.getInt(self, 'Nyeremény', 'Adja meg a nyereményt:', 100, 100, 2147483647, 100)
 
+        if ok:
+            self.setnyeremeny(int)
 
     def setupUi(self, Lottozomasina):
         if Lottozomasina.objectName():
             Lottozomasina.setObjectName(u"Lottozomasina")
         Lottozomasina.resize(643, 392)
+        Lottozomasina.setFixedSize(643, 392)
         Lottozomasina.setAcceptDrops(True)
 
         # Ikon
@@ -92,6 +101,7 @@ class Ui_Lottozomasina(object):
         self.menuBar.addAction(self.menuSegits_g.menuAction())
         self.menuSegits_g.addAction(self.actionInform_ci)
 
+        self.actionInform_ci.triggered.connect(self.opensetter)
         self.retranslateUi(Lottozomasina)
 
         QMetaObject.connectSlotsByName(Lottozomasina)
@@ -101,14 +111,15 @@ class Ui_Lottozomasina(object):
         Lottozomasina.setWindowTitle(QCoreApplication.translate("Lottozomasina",
                                                                 u"Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3masina",
                                                                 None))
-        self.actionInform_ci.setText(QCoreApplication.translate("Lottozomasina", u"Inform\u00e1ci\u00f3", None))
+        self.actionInform_ci.setText(
+            QCoreApplication.translate("Lottozomasina", u"Nyerem\u00e9ny be\u00e1llit\u00e1sa", None))
         self.pushButton.setText(QCoreApplication.translate("Lottozomasina", u"\u00d6t\u00f6slott\u00f3", None))
         self.pushButton_2.setText(QCoreApplication.translate("Lottozomasina", u"Skandin\u00e1v Lott\u00f3", None))
         self.welcomeLabel.setText(QCoreApplication.translate("Lottozomasina",
                                                              u"\u00dcdv\u00f6z\u00f6lj\u00fck a Szerencs\u00e9tlenj\u00e1t\u00e9k Zrt. Lott\u00f3z\u00f3g\u00e9p\u00e9ben!",
                                                              None))
         self.photoLabel.setText("")
-        self.menuSegits_g.setTitle(QCoreApplication.translate("Lottozomasina", u"Segits\u00e9g", None))
+        self.menuSegits_g.setTitle(QCoreApplication.translate("Lottozomasina", u"Opci\u00f3k", None))
     # retranslateUi
 
 if __name__ == "__main__":
