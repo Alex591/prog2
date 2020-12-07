@@ -63,7 +63,7 @@ class OtosLotto(Lotto):
         # A nyereményre félretett összeg
         self.__prizepool = prizepool
         # A súly százalékban értetendő,pl a telitalálatos a nyereményre félretett pénzösszeg 81.2%-át kapja.
-        self.suly = [0, 0.004, 0.014, 0.02, 0.05, 0.812]
+        self.suly = [0, 0.12, 0.015, 0.158, 0.16, 0.5]
 
     #     Az ötös lottó: 5 számmal játszasz.90-ből kihúznak 5 öt,és ha eltaláltad mind az 5 öt akkor jackpot
     def __str__(self):
